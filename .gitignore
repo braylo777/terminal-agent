@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+.walkthroughs/
+.DS_Store
+agent-work/
+agent-tools/
+*.egg-info/
+dist/
+build/

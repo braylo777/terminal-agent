@@ -1,0 +1,5 @@
+[
+  {"action": "plan", "plan": "Write hello.txt with printf."},
+  {"action": "run", "command": "printf 'hello\\n' > hello.txt", "reason": "create the file"},
+  {"action": "finish", "summary": "wrote hello.txt"}
+]

@@ -1,0 +1,328 @@
+{
+  "disclaimer": "Scripted mock provider. Not a language model. Not a Terminal-Bench score. Prices are illustrative (USD per 1M tokens: in 0.25, out 1.25), not a vendor price list.",
+  "elapsed_s": 0.7335,
+  "failed": 0,
+  "label": "MOCK",
+  "limits": {
+    "command_timeout_s": 30.0,
+    "max_commands": 12,
+    "max_completion_tokens": 512,
+    "max_output_chars": 8000,
+    "max_parse_failures": 2,
+    "max_repeats": 3,
+    "max_steps": 16,
+    "max_usd": 0.5
+  },
+  "passed": 13,
+  "platform": "Linux-6.12.113+-x86_64-with-glibc2.39",
+  "price_basis": "illustrative",
+  "prices_usd_per_million": {
+    "in": 0.25,
+    "out": 1.25
+  },
+  "provider": "scripted-mock",
+  "python": "3.12.3",
+  "started_at": "2026-11-09T21:50:06.372592+00:00",
+  "tasks": [
+    {
+      "command_trace": [
+        {
+          "command": "printf 'hello\\n' > hello.txt",
+          "exit_code": 0
+        }
+      ],
+      "commands": 1,
+      "completion_tokens": 51,
+      "detail": "hello.txt is exactly hello and a newline",
+      "elapsed_s": 0.0024,
+      "id": "write_hello",
+      "passed": true,
+      "prompt_tokens": 665,
+      "spent_usd": 0.00023,
+      "status": "finished",
+      "steps": 3,
+      "stop_reason": "finish"
+    },
+    {
+      "command_trace": [
+        {
+          "command": "python3 -m pytest -q -p no:cacheprovider --noconftest --rootdir=. -c pytest.ini test_mathx.py",
+          "exit_code": 1
+        },
+        {
+          "command": "cat mathx.py",
+          "exit_code": 0
+        },
+        {
+          "command": "python3 -c \"from pathlib import Path; Path('mathx.py').write_text('def add(a, b):' + chr(10) + '    return a + b' + chr(10))\"",
+          "exit_code": 0
+        },
+        {
+          "command": "python3 -m pytest -q -p no:cacheprovider --noconftest --rootdir=. -c pytest.ini test_mathx.py",
+          "exit_code": 0
+        }
+      ],
+      "commands": 4,
+      "completion_tokens": 184,
+      "detail": "pytest passes and the test file is unchanged",
+      "elapsed_s": 0.4816,
+      "id": "fix_failing_test",
+      "passed": true,
+      "prompt_tokens": 2715,
+      "spent_usd": 0.00090875,
+      "status": "finished",
+      "steps": 6,
+      "stop_reason": "finish"
+    },
+    {
+      "command_trace": [
+        {
+          "command": "mkdir -p src",
+          "exit_code": 0
+        },
+        {
+          "command": "printf 'pytest\\n' > requirements.txt",
+          "exit_code": 0
+        },
+        {
+          "command": "printf '# greet\\n' > README.md",
+          "exit_code": 0
+        },
+        {
+          "command": "python3 -c \"from pathlib import Path; Path('src/greet.py').write_text('def greet(name):' + chr(10) + '    return ' + chr(34) + 'hi ' + chr(34) + ' + name' + chr(10))\"",
+          "exit_code": 0
+        },
+        {
+          "command": "python3 -c \"import sys; sys.path.insert(0, 'src'); from greet import greet; assert greet('ada') == 'hi ada'\"",
+          "exit_code": 0
+        }
+      ],
+      "commands": 5,
+      "completion_tokens": 209,
+      "detail": "requirements, readme, and greet('ada') match",
+      "elapsed_s": 0.045,
+      "id": "setup_project",
+      "passed": true,
+      "prompt_tokens": 2568,
+      "spent_usd": 0.00090325,
+      "status": "finished",
+      "steps": 7,
+      "stop_reason": "finish"
+    },
+    {
+      "command_trace": [
+        {
+          "command": "grep '^ERROR ' app.log > errors.txt",
+          "exit_code": 0
+        }
+      ],
+      "commands": 1,
+      "completion_tokens": 57,
+      "detail": "errors.txt has the two ERROR lines",
+      "elapsed_s": 0.0032,
+      "id": "parse_logs",
+      "passed": true,
+      "prompt_tokens": 737,
+      "spent_usd": 0.0002555,
+      "status": "finished",
+      "steps": 3,
+      "stop_reason": "finish"
+    },
+    {
+      "command_trace": [
+        {
+          "command": "python3 -c \"import csv; from pathlib import Path; rows=list(csv.DictReader(open('sales.csv'))); total=sum(float(r['amount']) for r in rows); Path('total.txt').write_text(str(total)+'\\n')\"",
+          "exit_code": 0
+        }
+      ],
+      "commands": 1,
+      "completion_tokens": 93,
+      "detail": "amount column sums to 20",
+      "elapsed_s": 0.0193,
+      "id": "csv_sum",
+      "passed": true,
+      "prompt_tokens": 717,
+      "spent_usd": 0.0002955,
+      "status": "finished",
+      "steps": 3,
+      "stop_reason": "finish"
+    },
+    {
+      "command_trace": [
+        {
+          "command": "python3 -c \"import json; from pathlib import Path; Path('fixed.json').write_text(json.dumps({'name': 'ada', 'n': 1})+'\\n')\"",
+          "exit_code": 0
+        }
+      ],
+      "commands": 1,
+      "completion_tokens": 78,
+      "detail": "fixed.json is valid and data.json was left broken",
+      "elapsed_s": 0.0192,
+      "id": "fix_json",
+      "passed": true,
+      "prompt_tokens": 732,
+      "spent_usd": 0.0002805,
+      "status": "finished",
+      "steps": 3,
+      "stop_reason": "finish"
+    },
+    {
+      "command_trace": [
+        {
+          "command": "python3 -c \"import re; from pathlib import Path; text=Path('access.log').read_text(); ips=sorted(set(re.findall(r'\\b(?:\\d{1,3}\\.){3}\\d{1,3}\\b', text))); Path('ips.txt').write_text(''.join(i+'\\n' for i in ips))\"",
+          "exit_code": 0
+        }
+      ],
+      "commands": 1,
+      "completion_tokens": 100,
+      "detail": "three unique addresses, sorted lexicographically",
+      "elapsed_s": 0.0182,
+      "id": "extract_ips",
+      "passed": true,
+      "prompt_tokens": 778,
+      "spent_usd": 0.0003195,
+      "status": "finished",
+      "steps": 3,
+      "stop_reason": "finish"
+    },
+    {
+      "command_trace": [
+        {
+          "command": "python3 main.py",
+          "exit_code": 1
+        },
+        {
+          "command": "python3 -c \"from pathlib import Path; Path('util.py').write_text('def shout(s):' + chr(10) + '    return s.upper() + ' + chr(34) + '!' + chr(34) + chr(10))\"",
+          "exit_code": 0
+        },
+        {
+          "command": "python3 main.py",
+          "exit_code": 0
+        }
+      ],
+      "commands": 3,
+      "completion_tokens": 135,
+      "detail": "main.py printed OK! and was not edited",
+      "elapsed_s": 0.0469,
+      "id": "failing_import",
+      "passed": true,
+      "prompt_tokens": 1735,
+      "spent_usd": 0.0006025,
+      "status": "finished",
+      "steps": 5,
+      "stop_reason": "finish"
+    },
+    {
+      "command_trace": [
+        {
+          "command": "python3 -c \"from pathlib import Path; n=sum(1 for p in Path('.').rglob('*.py') if p.is_file()); Path('count.txt').write_text(str(n)+'\\n')\"",
+          "exit_code": 0
+        }
+      ],
+      "commands": 1,
+      "completion_tokens": 81,
+      "detail": "count.txt is 3",
+      "elapsed_s": 0.0192,
+      "id": "count_py_files",
+      "passed": true,
+      "prompt_tokens": 708,
+      "spent_usd": 0.00027825,
+      "status": "finished",
+      "steps": 3,
+      "stop_reason": "finish"
+    },
+    {
+      "command_trace": [
+        {
+          "command": "python3 -c \"from pathlib import Path; [p.with_suffix('').write_bytes(p.read_bytes()) for p in Path('.').rglob('*.bak') if p.is_file()]\"",
+          "exit_code": 0
+        }
+      ],
+      "commands": 1,
+      "completion_tokens": 84,
+      "detail": "bak files were copied and originals kept",
+      "elapsed_s": 0.0211,
+      "id": "copy_baks",
+      "passed": true,
+      "prompt_tokens": 764,
+      "spent_usd": 0.000296,
+      "status": "finished",
+      "steps": 3,
+      "stop_reason": "finish"
+    },
+    {
+      "command_trace": [
+        {
+          "command": "python3 -c \"from pathlib import Path; Path('Makefile').write_text('hello:' + chr(10) + chr(9) + 'printf hello-from-make' + chr(10))\"",
+          "exit_code": 0
+        },
+        {
+          "command": "make hello",
+          "exit_code": 0
+        }
+      ],
+      "commands": 2,
+      "completion_tokens": 103,
+      "detail": "make hello printed hello-from-make",
+      "elapsed_s": 0.0241,
+      "id": "makefile_hello",
+      "passed": true,
+      "prompt_tokens": 1007,
+      "spent_usd": 0.0003805,
+      "status": "finished",
+      "steps": 4,
+      "stop_reason": "finish"
+    },
+    {
+      "command_trace": [
+        {
+          "command": "git init",
+          "exit_code": 0
+        },
+        {
+          "command": "printf 'ship it\\n' > notes.txt",
+          "exit_code": 0
+        },
+        {
+          "command": "git add notes.txt",
+          "exit_code": 0
+        },
+        {
+          "command": "git -c user.email=agent@example.com -c user.name=terminal-agent -c commit.gpgsign=false commit -m 'add notes'",
+          "exit_code": 0
+        }
+      ],
+      "commands": 4,
+      "completion_tokens": 141,
+      "detail": "notes.txt committed with message 'add notes'",
+      "elapsed_s": 0.0137,
+      "id": "git_commit",
+      "passed": true,
+      "prompt_tokens": 2498,
+      "spent_usd": 0.00080075,
+      "status": "finished",
+      "steps": 6,
+      "stop_reason": "finish"
+    },
+    {
+      "command_trace": [
+        {
+          "command": "python3 -c \"from pathlib import Path; from collections import Counter; words=Path('words.txt').read_text().split(); counts=Counter(w.lower() for w in words); best=sorted(counts, key=lambda w: (-counts[w], w))[0]; Path('top.txt').write_text(best+'\\n')\"",
+          "exit_code": 0
+        }
+      ],
+      "commands": 1,
+      "completion_tokens": 110,
+      "detail": "top word is blue",
+      "elapsed_s": 0.0184,
+      "id": "word_freq",
+      "passed": true,
+      "prompt_tokens": 767,
+      "spent_usd": 0.00032925,
+      "status": "finished",
+      "steps": 3,
+      "stop_reason": "finish"
+    }
+  ],
+  "total": 13
+}
